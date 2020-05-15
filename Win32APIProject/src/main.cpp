@@ -4,11 +4,13 @@
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
 
+
+
 	MainWindow win;
 
+	win.SetIcon((HICON)LoadImage(hInstance, L"test.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE));
 	if (!win.CreateBaseWindow(L"Win32API Project", WS_OVERLAPPEDWINDOW))
 		return 0;
-
 
 	ShowWindow(win.GetWindow(), nCmdShow);
 
@@ -20,6 +22,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
 	}
 
+	
 	return 0;
 }
 

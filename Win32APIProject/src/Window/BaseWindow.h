@@ -44,7 +44,6 @@ public:
 		HMENU hMenu = 0
 	) {
 
-		WNDCLASS wc = {};
 		wc.lpfnWndProc = DERIVED_TYPE::WindowProc;
 		wc.hInstance = GetModuleHandle(NULL);
 		wc.lpszClassName = ClassName();
@@ -66,5 +65,6 @@ protected:
 	virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) = 0;
 
 	HWND m_hwnd;
+	WNDCLASS wc = {};
 };
 
