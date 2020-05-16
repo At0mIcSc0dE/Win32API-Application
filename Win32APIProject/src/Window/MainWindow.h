@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseWindow.h"
+#include "BaseWindow.hpp"
 
 
 class MainWindow : public BaseWindow<MainWindow>

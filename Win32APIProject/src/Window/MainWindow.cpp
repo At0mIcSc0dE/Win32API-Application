@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "MainWindow.h"
-#include <shobjidl.h>
+#include <shobjidl.h>   //FileOpenDialog...
+#include <atlbase.h>    //CComPtr...
+#include <winerror.h>   //Error codes of hr(HRESULT)
 
 #define CHECKCOM(x) if(FAILED(x)) return 0
 
@@ -14,29 +16,32 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
         return 0;
     case WM_LBUTTONDOWN:
     {
-        HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
-        CHECKCOM(hr);
+        {
+            HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+            CHECKCOM(hr);
 
-        IFileOpenDialog* pFileOpen;
-        hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_IFileOpenDialog, reinterpret_cast<void**>(&pFileOpen));
-        CHECKCOM(hr);
+            CComPtr<IFileOpenDialog> pFileOpen;
+            hr = CoCreateInstance(__uuidof(FileOpenDialog), NULL, CLSCTX_ALL, IID_PPV_ARGS(&pFileOpen));
+            CHECKCOM(hr);
 
-        hr = pFileOpen->Show(NULL);
-        CHECKCOM(hr);
+            CComPtr<IFileDialogCustomize> pCustom;
+            hr = pFileOpen->QueryInterface(IID_PPV_ARGS(&pCustom)); //IID_PPV_ARGS prevents casting to wrong type
+            CHECKCOM(hr);
 
-        IShellItem* pItem;
-        hr = pFileOpen->GetResult(&pItem);
-        CHECKCOM(hr);
+            hr = pFileOpen->Show(NULL);
+            CHECKCOM(hr);
 
-        PWSTR pszFilePath;
-        hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
-        CHECKCOM(hr);
+            CComPtr<IShellItem> pItem;
+            hr = pFileOpen->GetResult(&pItem);
+            CHECKCOM(hr);
 
-        MessageBox(NULL, pszFilePath, L"File Path", MB_OK);
-        CoTaskMemFree(pszFilePath);
+            PWSTR pszFilePath;
+            hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+            CHECKCOM(hr);
 
-        pItem->Release();
-        pFileOpen->Release();
+            MessageBox(NULL, pszFilePath, L"File Path", MB_OK);
+            CoTaskMemFree(pszFilePath);
+        }
 
         CoUninitialize();
         return 0;

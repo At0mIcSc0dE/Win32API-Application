@@ -29,10 +29,10 @@
     <ClInclude Include="src\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Window\BaseWindow.h">
+    <ClInclude Include="src\Window\MainWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Window\MainWindow.h">
+    <ClInclude Include="src\Window\BaseWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
