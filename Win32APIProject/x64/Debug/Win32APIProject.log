@@ -1,0 +1,4 @@
+﻿  MainWindow.cpp
+  main.cpp
+  Generating Code...
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(99): error C4716: 'MainWindow::CreateGraphicsResources': must return a value

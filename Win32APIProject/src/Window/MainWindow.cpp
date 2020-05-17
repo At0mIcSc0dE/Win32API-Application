@@ -64,6 +64,50 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 }
 
 
+void MainWindow::CalculateLayout() {
+
+    if (m_RenderTarget != NULL) {
+        D2D1_SIZE_F size = m_RenderTarget->GetSize();
+        const float x = size.width / 2;
+        const float y = size.height / 2;
+        const float radius = min(x, y);
+        m_Ellipse = D2D1::Ellipse(D2D1::Point2F(x, y), radius, radius);
+
+    }
+
+}
+
+
+HRESULT MainWindow::CreateGraphicsResources() {
+
+    HRESULT hr = S_OK;
+    if (m_RenderTarget == NULL) {
+
+        RECT rc;
+        GetClientRect(m_hwnd, &rc);
+
+        D2D1_SIZE_U size = D2D1::SizeU(rc.right, rc.bottom);
+    
+        hr = m_Factory->CreateHwndRenderTarget(
+            D2D1::RenderTargetProperties(),
+            D2D1::HwndRenderTargetProperties(m_hwnd, size), 
+            &m_RenderTarget
+        );
+
+        if (SUCCEEDED(hr)) {
+            const D2D1_COLOR_F color = D2D1::ColorF(1.0f, 1.0f, 0);
+            hr = m_RenderTarget->CreateSolidColorBrush(color, &m_Brush);
+
+            if (SUCCEEDED(hr)) {
+                CalculateLayout();
+            }
+        }
+
+    }
+
+}
+
+
 void MainWindow::SetIcon(HICON hIcon) {
     wc.hIcon = hIcon;
 }
