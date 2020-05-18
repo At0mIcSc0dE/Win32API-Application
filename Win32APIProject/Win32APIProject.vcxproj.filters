@@ -24,6 +24,9 @@
     <ClCompile Include="src\Window\MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\DPI_DIP.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\pch.h">
@@ -45,5 +48,8 @@
     <Image Include="test.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="src\manifest.xml" />
   </ItemGroup>
 </Project>
