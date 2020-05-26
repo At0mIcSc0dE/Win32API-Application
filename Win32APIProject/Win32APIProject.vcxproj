@@ -166,7 +166,6 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\DPI_DIP.hpp" />
     <ClCompile Include="src\Window\MainWindow.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -177,6 +176,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DPIScale.hpp" />
     <ClInclude Include="src\Window\MainWindow.h" />
     <ClInclude Include="src\Window\BaseWindow.hpp" />
     <ClInclude Include="src\pch.h" />

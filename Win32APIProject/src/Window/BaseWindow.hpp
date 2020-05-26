@@ -52,6 +52,8 @@ public:
         wc.lpfnWndProc = DERIVED_TYPE::WindowProc;
         wc.hInstance = GetModuleHandle(NULL);
         wc.lpszClassName = ClassName();
+        //To receive double clicks
+        wc.style = CS_DBLCLKS;
 
         RegisterClass(&wc);
 

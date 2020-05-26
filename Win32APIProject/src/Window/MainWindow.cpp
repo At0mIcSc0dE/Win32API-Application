@@ -3,6 +3,10 @@
 #include <shobjidl.h>   //FileOpenDialog...
 #include <atlbase.h>    //CComPtr...
 #include <winerror.h>   //Error codes of hr(HRESULT)
+#include <windowsx.h>   //GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)    (gets pixel out of lParam)
+
+
+#include "DPIScale.hpp"
 
 #define CHECKCOM(x) if(FAILED(x)) return 0
 
@@ -18,7 +22,6 @@ void SafeRelease(T * *ppT) {
 }
 
 
-
 LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
     switch (uMsg)
@@ -30,6 +33,7 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
         {
             return -1;  // Fail CreateWindowEx.
         }
+        DPIScale::Initialize(m_Factory);
         return 0;
     }
     case WM_DESTROY:
@@ -37,6 +41,18 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SafeRelease(&m_Factory);
         PostQuitMessage(0);
         return 0;
+    case WM_LBUTTONDOWN:
+        OnLButtonDown(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), (DWORD)wParam);
+        return 0;
+
+    case WM_LBUTTONUP:
+        OnLButtonUp();
+        return 0;
+
+    case WM_MOUSEMOVE:
+        OnMouseMove(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), (DWORD)wParam);
+        return 0;
+    
     case WM_PAINT:
     {
         OnPaint();
@@ -56,19 +72,10 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 
 MainWindow::MainWindow()
-    :m_Factory(NULL), m_RenderTarget(NULL), m_Brush(NULL) {}
+    :m_Factory(NULL), m_RenderTarget(NULL), m_Brush(NULL), m_Ellipse(D2D1::Ellipse(D2D1::Point2F(), 0, 0)), m_ptMouse(D2D1::Point2F()) {}
 
 
 void MainWindow::CalculateLayout() {
-
-    if (m_RenderTarget != NULL) {
-        D2D1_SIZE_F size = m_RenderTarget->GetSize();
-        const float x = size.width / 2;
-        const float y = size.height / 2;
-        const float radius = min(x, y);
-        m_Ellipse = D2D1::Ellipse(D2D1::Point2F(x, y), radius, radius);
-
-    }
 
 }
 
@@ -92,6 +99,11 @@ HRESULT MainWindow::CreateGraphicsResources() {
         if (SUCCEEDED(hr)) {
             const D2D1_COLOR_F color = D2D1::ColorF(1.0f, 1.0f, 0);
             hr = m_RenderTarget->CreateSolidColorBrush(color, &m_Brush);
+            //Adds rotation to the circle
+            //m_RenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(20, D2D1::Point2F(100, 100)));
+            
+            //Removes rotation
+            //m_RenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
             if (SUCCEEDED(hr)) {
                 CalculateLayout();
@@ -147,6 +159,41 @@ void MainWindow::Resize() {
 
     }
 
+}
+
+void MainWindow::OnLButtonDown(int pixelX, int pixelY, DWORD flags)
+{
+    //Captures event outside of window
+    SetCapture(m_hwnd);
+    m_Ellipse.point = m_ptMouse = DPIScale::PixelsToDips(pixelX, pixelY);
+    m_Ellipse.radiusX = m_Ellipse.radiusY = 1.0f;
+    //Redraw
+    InvalidateRect(m_hwnd, NULL, FALSE);
+}
+
+void MainWindow::OnLButtonUp()
+{
+    //Stops capturing events outside of window
+    ReleaseCapture();
+}
+
+void MainWindow::OnMouseMove(int pixelX, int pixelY, DWORD flags)
+{
+    if (flags & MK_LBUTTON)  //Check if LBUTTON is pressed/down
+    {
+        const D2D1_POINT_2F dips = DPIScale::PixelsToDips(pixelX, pixelY);
+
+        const float width = (dips.x - m_ptMouse.x) / 2;
+        const float height = (dips.y - m_ptMouse.y) / 2;
+        const float x1 = m_ptMouse.x + width;
+        const float y1 = m_ptMouse.y + height;
+
+        m_Ellipse = D2D1::Ellipse(D2D1::Point2F(x1, y1), width, height);
+
+        //Redraw
+        InvalidateRect(m_hwnd, NULL, FALSE);
+
+    }
 }
 
 

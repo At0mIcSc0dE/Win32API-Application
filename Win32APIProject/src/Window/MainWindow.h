@@ -1,5 +1,8 @@
 #pragma once
 
+#define EventHandlers
+
+
 #include "pch.h"
 #include "BaseWindow.hpp"
 
@@ -11,6 +14,7 @@ private:
 	ID2D1HwndRenderTarget*	m_RenderTarget;
 	ID2D1SolidColorBrush*	m_Brush;
 	D2D1_ELLIPSE			m_Ellipse;
+	D2D1_POINT_2F			m_ptMouse;
 
 
 	void CalculateLayout();
@@ -18,6 +22,11 @@ private:
 	void DiscardGraphicsResources();
 	void OnPaint();
 	void Resize();
+
+public:
+	void OnLButtonDown(int pixelX, int pixelY, DWORD flags);
+	void OnLButtonUp();
+	void OnMouseMove(int pixelX, int pixelY, DWORD flags);
 
 
 public:
