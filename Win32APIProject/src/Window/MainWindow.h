@@ -23,6 +23,8 @@ private:
 	void OnPaint();
 	void Resize();
 
+	BOOL IsMouseWheelPresent();
+
 public:
 	void OnLButtonDown(int pixelX, int pixelY, DWORD flags);
 	void OnLButtonUp();

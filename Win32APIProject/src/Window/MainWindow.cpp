@@ -24,8 +24,38 @@ void SafeRelease(T * *ppT) {
 
 LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
+    wchar_t keyPressedMsg[64];
     switch (uMsg)
     {
+    case WM_SYSKEYDOWN:
+        swprintf_s(keyPressedMsg, L"WM_SYSKEYDOWN: 0x%x\n", wParam);
+        OutputDebugString(keyPressedMsg);
+        break;
+
+    case WM_SYSCHAR:
+        swprintf_s(keyPressedMsg, L"WM_SYSCHAR: %c\n", (wchar_t)wParam);
+        OutputDebugString(keyPressedMsg);
+        break;
+
+    case WM_SYSKEYUP:
+        swprintf_s(keyPressedMsg, L"WM_SYSKEYUP: 0x%x\n", wParam);
+        OutputDebugString(keyPressedMsg);
+        break;
+
+    case WM_KEYDOWN:
+        swprintf_s(keyPressedMsg, L"WM_KEYDOWN: 0x%x\n", wParam);
+        OutputDebugString(keyPressedMsg);
+        break;
+
+    case WM_KEYUP:
+        swprintf_s(keyPressedMsg, L"WM_KEYUP: 0x%x\n", wParam);
+        OutputDebugString(keyPressedMsg);
+        break;
+
+    case WM_CHAR:
+        swprintf_s(keyPressedMsg, L"WM_CHAR: %c\n", (wchar_t)wParam);
+        OutputDebugString(keyPressedMsg);
+        break;
     case WM_CREATE:
     {
         if (FAILED(D2D1CreateFactory(
@@ -41,10 +71,34 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SafeRelease(&m_Factory);
         PostQuitMessage(0);
         return 0;
-    case WM_LBUTTONDOWN:
-        OnLButtonDown(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), (DWORD)wParam);
+    return 0;
+    case WM_MOUSEWHEEL:
+    {
+        //Prints direction of scroll:   positive -> forward, away from the user
+        //                              negative -> backwards, to the user
+        int delta = GET_WHEEL_DELTA_WPARAM(wParam);
+        wchar_t buffer[256];
+        wsprintfW(buffer, L"%d", delta);
+        MessageBoxW(nullptr, buffer, buffer, MB_OK);
+    }
         return 0;
+    case WM_LBUTTONDOWN:
+    {   
+        //0x8000 contains the bit flag that tests whether the key is currently pressed.
+        if (GetKeyState(VK_MENU) & 0x8000)
+        {
+            // ALT Key is down
+            //MessageBox(m_hwnd, L"ALT KEY DOWN", L"", MB_OK);
+        }
 
+        //Checks if the user wants to drag or just click
+        POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+        if (DragDetect(m_hwnd, pt))
+        {
+            OnLButtonDown(pt.x, pt.y, (DWORD)wParam);
+        }
+        return 0;
+    }
     case WM_LBUTTONUP:
         OnLButtonUp();
         return 0;
@@ -63,22 +117,33 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
         Resize();
         return 0;
     }
-    default:
-        return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
     }
-    return TRUE;
+    return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
 
 }
 
 
 MainWindow::MainWindow()
-    :m_Factory(NULL), m_RenderTarget(NULL), m_Brush(NULL), m_Ellipse(D2D1::Ellipse(D2D1::Point2F(), 0, 0)), m_ptMouse(D2D1::Point2F()) {}
+    :m_Factory(NULL), m_RenderTarget(NULL), m_Brush(NULL), m_Ellipse(D2D1::Ellipse(D2D1::Point2F(), 0, 0)), m_ptMouse(D2D1::Point2F()) 
+{
+    //Detects WM_MOUSEHOVER, WM_MOUSELEAVE events :::::: WARNING: CREATES OVERHEAD
+    //TRACKMOUSEEVENT tme;
+    //tme.cbSize = sizeof(tme);
+    //tme.hwndTrack = m_hwnd;
+    //tme.dwFlags = TME_HOVER | TME_LEAVE;
+    //tme.dwHoverTime = HOVER_DEFAULT;
+    //TrackMouseEvent(&tme);
+}
 
 
 void MainWindow::CalculateLayout() {
 
 }
 
+BOOL MainWindow::IsMouseWheelPresent()
+{
+    return (GetSystemMetrics(SM_MOUSEWHEELPRESENT) != 0);
+}
 
 HRESULT MainWindow::CreateGraphicsResources() {
 
