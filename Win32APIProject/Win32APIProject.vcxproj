@@ -177,15 +177,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DPIScale.hpp" />
+    <ClInclude Include="src\resource.h" />
     <ClInclude Include="src\Window\MainWindow.h" />
     <ClInclude Include="src\Window\BaseWindow.hpp" />
     <ClInclude Include="src\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="resource.rc" />
+    <ResourceCompile Include="src\resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="test.ico" />
+    <Image Include="src\test.ico" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="src\manifest.xml" />

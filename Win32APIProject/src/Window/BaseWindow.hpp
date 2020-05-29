@@ -1,7 +1,7 @@
 #pragma once
 
 #include "pch.h"
-
+#include "resource.h"
 
 template <class DERIVED_TYPE>
 class BaseWindow

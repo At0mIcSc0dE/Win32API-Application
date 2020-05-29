@@ -1,18 +1,18 @@
 ﻿  MainWindow.cpp
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(31,35): warning C4477: 'swprintf_s' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'WPARAM'
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(31,35): message : consider using '%llx' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(31,35): message : consider using '%Ix' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(31,35): message : consider using '%I64x' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(41,35): warning C4477: 'swprintf_s' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'WPARAM'
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(41,35): message : consider using '%llx' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(41,35): message : consider using '%Ix' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(41,35): message : consider using '%I64x' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(46,35): warning C4477: 'swprintf_s' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'WPARAM'
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(46,35): message : consider using '%llx' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(46,35): message : consider using '%Ix' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(46,35): message : consider using '%I64x' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(51,35): warning C4477: 'swprintf_s' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'WPARAM'
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(51,35): message : consider using '%llx' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(51,35): message : consider using '%Ix' in the format string
-C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(51,35): message : consider using '%I64x' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(58,35): warning C4477: 'swprintf_s' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'WPARAM'
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(58,35): message : consider using '%llx' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(58,35): message : consider using '%Ix' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(58,35): message : consider using '%I64x' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(68,35): warning C4477: 'swprintf_s' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'WPARAM'
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(68,35): message : consider using '%llx' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(68,35): message : consider using '%Ix' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(68,35): message : consider using '%I64x' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(73,35): warning C4477: 'swprintf_s' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'WPARAM'
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(73,35): message : consider using '%llx' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(73,35): message : consider using '%Ix' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(73,35): message : consider using '%I64x' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(78,35): warning C4477: 'swprintf_s' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'WPARAM'
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(78,35): message : consider using '%llx' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(78,35): message : consider using '%Ix' in the format string
+C:\dev\Cpp\Projects\Win32API-Application\Win32APIProject\src\Window\MainWindow.cpp(78,35): message : consider using '%I64x' in the format string
   Win32APIProject.vcxproj -> C:\dev\Cpp\Projects\Win32API-Application\x64\Debug\Win32APIProject.exe

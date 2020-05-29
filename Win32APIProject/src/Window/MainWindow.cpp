@@ -5,8 +5,8 @@
 #include <winerror.h>   //Error codes of hr(HRESULT)
 #include <windowsx.h>   //GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)    (gets pixel out of lParam)
 
-
 #include "DPIScale.hpp"
+
 
 #define CHECKCOM(x) if(FAILED(x)) return 0
 
@@ -27,6 +27,32 @@ LRESULT MainWindow::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
     wchar_t keyPressedMsg[64];
     switch (uMsg)
     {
+    case WM_COMMAND:
+        switch (LOWORD(wParam))
+        {
+        case ID_DRAW_MODE:
+            MessageBox(m_hwnd, L"DrawMode", L"", MB_OK);
+            break;
+        case ID_SELECT_MODE:
+            MessageBox(m_hwnd, L"SelectMode", L"", MB_OK);
+            break;
+        case ID_TOGGLE_MODE:
+            MessageBox(m_hwnd, L"SelectOrDrawMode", L"", MB_OK);
+            break;
+        }
+        return 0;
+
+    case WM_SETCURSOR:
+    {
+        auto hCursor = LoadCursor(NULL, IDC_ARROW);
+        if (LOWORD(lParam) == HTCLIENT)
+        {
+            SetCursor(hCursor);
+            return TRUE;
+        }
+        break;
+    }
+    return 0;
     case WM_SYSKEYDOWN:
         swprintf_s(keyPressedMsg, L"WM_SYSKEYDOWN: 0x%x\n", wParam);
         OutputDebugString(keyPressedMsg);

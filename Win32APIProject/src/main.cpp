@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Window/MainWindow.h"
 
-
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
 
 
@@ -13,12 +12,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
 	ShowWindow(win.Window(), nCmdShow);
 
+	HACCEL hAccel = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDR_ACCEL1));
+
 	MSG msg = { };
-	while (GetMessage(&msg, NULL, 0, 0)) {
-
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-
+	while (GetMessage(&msg, NULL, 0, 0)) 
+	{
+		if (!TranslateAccelerator(win.Window(), hAccel, &msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 	}
 	
 	return 0;
